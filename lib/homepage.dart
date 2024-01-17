@@ -10,6 +10,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   FirebaseService firebaseService = FirebaseService();
 
+  final features = [
+    'Temperature',
+    'Humidity',
+    'CO2',
+    'PM25',
+    'PM10',
+    'PM',
+    'VOC',
+    'Time'
+  ];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -29,10 +40,11 @@ class _HomePageState extends State<HomePage> {
               stream: firebaseService.dataStream,
               builder: (BuildContext context,
                   AsyncSnapshot<DatabaseEvent> snapshot) {
-                if (snapshot.hasData) {
-                  print(snapshot.data);
+                if (snapshot.hasData && snapshot.data != null) {
+                  var valueMap =
+                      snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
                   return GridView.builder(
-                    itemCount: 6,
+                    itemCount: 8,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // number of columns
                       childAspectRatio: 1.75, // width / height
@@ -42,13 +54,15 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
                         children: <Widget>[
-                          Text('Label ${index + 1}',
+                          Text('${features[index]}',
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           Expanded(
                             child: Card(
                               child: Center(
-                                /*child: Text('Value ${map.values.elementAt(index)}'),*/
-                                child: Text('Value ${index}'),
+                                child: Text(
+                                    '${valueMap?[features[index]] ?? 'N/A'}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ),
                           ),
