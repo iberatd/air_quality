@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     'PM10',
     'PM',
     'VOC',
-    'Time'
+    'Time',
   ];
 
   @override
@@ -28,22 +28,25 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Air Quality Application',
-            style: TextStyle(color: Colors.white)),
+        title: Text(
+          'Air Quality Application',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.lightGreenAccent,
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(32),
-            child: StreamBuilder<DatabaseEvent>(
-              stream: firebaseService.dataStream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<DatabaseEvent> snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
-                  var valueMap =
-                      snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
-                  return GridView.builder(
+      body: StreamBuilder<DatabaseEvent>(
+        stream: firebaseService.dataStream,
+        builder: (BuildContext context, AsyncSnapshot<DatabaseEvent> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            var valueMap =
+                snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
+            var targetValue = valueMap?['target'] ?? 'N/A';
+
+            return Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: GridView.builder(
                     itemCount: 8,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // number of columns
@@ -54,62 +57,67 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
                         children: <Widget>[
-                          Text('${features[index]}',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            '${features[index]}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           Expanded(
                             child: Card(
                               child: Center(
                                 child: Text(
-                                    '${valueMap?[features[index]] ?? 'N/A'}',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
+                                  '${valueMap?[features[index]] ?? 'N/A'}',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
                         ],
                       );
                     },
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: width,
-              height: height / 3,
-              color: Colors.lightGreenAccent,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Air Quality',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    width: width,
+                    height: height / 3,
+                    color: Colors.lightGreenAccent,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Air Quality',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Container(
+                            width: width / 2,
+                            height: 64,
+                            child: Card(
+                              child: Center(
+                                child: Text(
+                                  '$targetValue',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    SizedBox(height: 4),
-                    Container(
-                      width: width / 2,
-                      height: 64,
-                      child: Card(
-                        child: Center(
-                            child: Text('Check',
-                                style: TextStyle(fontWeight: FontWeight.bold))),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ],
+              ],
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
