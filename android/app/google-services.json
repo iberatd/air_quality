@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "90348986288",
+    "project_id": "iot-air-quality-38ff3",
+    "storage_bucket": "iot-air-quality-38ff3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90348986288:android:ff45b25351d875e97a8075",
+        "android_client_info": {
+          "package_name": "com.example.air_quality"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc2VPlKA_Ue6mXcAg8IM9afaKsSbO9biA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

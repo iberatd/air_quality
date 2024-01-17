@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBUbDVnJkOT7lN1T-bzNSmv7qwrKIA98U0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>90348986288</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.airQuality.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>iot-air-quality-38ff3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>iot-air-quality-38ff3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:90348986288:ios:d2f5444397f0ca857a8075</string>
+</dict>
+</plist>
