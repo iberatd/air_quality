@@ -9,6 +9,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseService firebaseService = FirebaseService();
+  int counterFail = 0;
+  int counterSuccess = 0;
+
+  dynamic prevValMap;
+  String prevTargetValue = "";
 
   final features = [
     'Temperature',
@@ -40,10 +45,18 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData && snapshot.data != null) {
             var rawMap =
                 snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
+
             var key = rawMap?.keys.first;
             var valueMap = rawMap?[key];
-            print(valueMap);
-            var targetValue = valueMap?['target'] ?? 'N/A';
+            String targetValue = "";
+            if (valueMap.runtimeType == String) {
+              targetValue = prevTargetValue;
+              valueMap = prevValMap;
+            } else {
+              prevValMap = valueMap;
+              targetValue = valueMap?['Prediction'] ?? 'N/A';
+              prevTargetValue = targetValue;
+            }
 
             return Stack(
               children: [
@@ -104,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                             child: Card(
                               child: Center(
                                 child: Text(
-                                  '$targetValue',
+                                  targetValue,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
