@@ -16,9 +16,9 @@ class _HomePageState extends State<HomePage> {
     'CO2',
     'PM25',
     'PM10',
-    'PM',
-    'VOC',
-    'Time',
+    'PM1',
+    'Voc',
+    'MeasuredTime',
   ];
 
   @override
@@ -38,8 +38,11 @@ class _HomePageState extends State<HomePage> {
         stream: firebaseService.dataStream,
         builder: (BuildContext context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            var valueMap =
+            var rawMap =
                 snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
+            var key = rawMap?.keys.first;
+            var valueMap = rawMap?[key];
+            print(valueMap);
             var targetValue = valueMap?['target'] ?? 'N/A';
 
             return Stack(
