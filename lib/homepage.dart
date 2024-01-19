@@ -9,8 +9,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseService firebaseService = FirebaseService();
-  int counterFail = 0;
-  int counterSuccess = 0;
 
   dynamic prevValMap;
   String prevTargetValue = "";
@@ -64,7 +62,8 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(32),
                   child: GridView.builder(
                     itemCount: 8,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // number of columns
                       childAspectRatio: 1.75, // width / height
                       mainAxisSpacing: 16,
@@ -74,15 +73,17 @@ class _HomePageState extends State<HomePage> {
                       return Column(
                         children: <Widget>[
                           Text(
-                            '${features[index]}',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            features[index],
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Expanded(
                             child: Card(
                               child: Center(
                                 child: Text(
-                                  '${valueMap?[features[index]] ?? 'N/A'}',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  /*'${valueMap?[features[index]] ?? 'N/A'}',*/
+                                  '${((valueMap?[features[index]] ?? 'N/A').toString().split('.').first + "." + (valueMap?[features[index]] ?? 'N/A').toString().split('.').last.substring(0, 1))}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Air Quality',
                             style: TextStyle(
                               fontSize: 24,
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Container(
                             width: width / 2,
                             height: 64,
@@ -118,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                               child: Center(
                                 child: Text(
                                   targetValue,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
